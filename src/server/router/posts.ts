@@ -46,9 +46,8 @@ export const postsRouter = createRouter()
 		},
 	});
 
-export const protectedPostRouter = createProtectedRouter().mutation(
-	"add-post",
-	{
+export const protectedPostRouter = createProtectedRouter()
+	.mutation("add-post", {
 		input: z.object({
 			title: z
 				.string()
@@ -70,5 +69,17 @@ export const protectedPostRouter = createProtectedRouter().mutation(
 			});
 			return newPost;
 		},
-	}
-);
+	})
+	.mutation("delete-post", {
+		input: z.object({
+			postId: z.string(),
+		}),
+		async resolve({ ctx, input }) {
+			const postToBeDeleted = await ctx.prisma.posts.delete({
+				where: {
+					id: input.postId,
+				},
+			});
+			return postToBeDeleted;
+		},
+	});
