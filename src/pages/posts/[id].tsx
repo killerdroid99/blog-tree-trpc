@@ -30,7 +30,10 @@ const PostPage = () => {
 					<div className="grid place-items-center w-[96vw] xl:w-[76vw] relative">
 						<div className="fixed right-[1rem] xl:right-[2vw] top-[4rem] inline-flex flex-col space-y-2 z-10">
 							<EditPostButton />
-							<DeletePostButton />
+							<DeletePostButton
+								postId={router.query.id as string}
+								userId={data?.userId as string}
+							/>
 						</div>
 						<div className="flex flex-col items-end">
 							<h1 className="text-center text-4xl font-extrabold mb-1 font-serif underline underline-offset-4 decoration-2 decoration-fuchsia-500">
