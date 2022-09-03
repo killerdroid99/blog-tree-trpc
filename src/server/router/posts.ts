@@ -82,4 +82,30 @@ export const protectedPostRouter = createProtectedRouter()
 			});
 			return postToBeDeleted;
 		},
+	})
+	.mutation("update-post", {
+		input: z.object({
+			postId: z.string(),
+			title: z
+				.string()
+				.trim()
+				.min(5, "Post title must be 5 or more characters long")
+				.max(50, "Post title must be 50 or fewer characters long"),
+			body: z
+				.string()
+				.trim()
+				.min(25, "Post body must be 25 or more characters long"),
+		}),
+		async resolve({ ctx, input }) {
+			const updatedPost = await ctx.prisma.posts.update({
+				where: {
+					id: input.postId,
+				},
+				data: {
+					title: input.title,
+					body: input.body,
+				},
+			});
+			return updatedPost;
+		},
 	});
