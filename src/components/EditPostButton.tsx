@@ -3,14 +3,20 @@ import Link from "next/link";
 
 interface EditPostButtonProps {
 	extraClassNames?: string;
+	postId: string;
+	userId: string;
 }
 
-const EditPostButton = ({ extraClassNames }: EditPostButtonProps) => {
+const EditPostButton = ({
+	extraClassNames,
+	postId,
+	userId,
+}: EditPostButtonProps) => {
 	const { data: session } = useSession();
 
-	if (session) {
+	if (session?.user?.id === userId) {
 		return (
-			<Link href="/add-post">
+			<Link href={`/posts/edit/${postId}`}>
 				<button
 					className={`${extraClassNames} inline-flex items-center space-x-2 bg-orange-500 backdrop-blur-sm hover:bg-orange-600 text-sm font-bold py-1 px-3 rounded-full transition-all ease-in`}
 				>

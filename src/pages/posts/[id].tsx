@@ -29,7 +29,10 @@ const PostPage = () => {
 				) : (
 					<div className="grid place-items-center w-[96vw] xl:w-[76vw] relative">
 						<div className="fixed right-[1rem] xl:right-[2vw] top-[4rem] inline-flex flex-col space-y-2 z-10">
-							<EditPostButton />
+							<EditPostButton
+								postId={router.query.id as string}
+								userId={data?.userId as string}
+							/>
 							<DeletePostButton
 								postId={router.query.id as string}
 								userId={data?.userId as string}
