@@ -1,16 +1,19 @@
 import { signIn, signOut, useSession } from "next-auth/react";
 import Image from "next/image";
+import Link from "next/link";
 
 const Navbar = () => {
 	const { data: session, status } = useSession();
 
 	return (
 		<header className="flex bg-neutral-800 border-b border-neutral-600/50 py-2 px-4 lg:px-[10vw] justify-between w-full fixed top-0">
-			<div>
-				<h2 className="text-xl font-bold font-mono">
-					Blog<span className="text-fuchsia-500 ml-1">Tree</span>
-				</h2>
-			</div>
+			<Link href="/">
+				<button className="cursor-pointer focus-visible:underline underline-offset-2 decoration-fuchsia-500 outline-none border-none focus-visible:text-fuchsia-500">
+					<h2 className="text-xl font-bold font-mono">
+						Blog<span className="text-fuchsia-500 ml-1">Tree</span>
+					</h2>
+				</button>
+			</Link>
 			<nav>
 				{status === "unauthenticated" && (
 					<div>
