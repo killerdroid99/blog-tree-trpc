@@ -53,6 +53,7 @@ model User {
     image         String?
     accounts      Account[]
     sessions      Session[]
+    posts         Posts[]
 }
 
 model VerificationToken {
@@ -61,4 +62,15 @@ model VerificationToken {
     expires    DateTime
 
     @@unique([identifier, token])
+}
+
+model Posts {
+    id        String   @id @default(uuid())
+    title     String   @db.Text
+    body      String   @db.Text
+    userId    String
+    votes     Int      @default(0)
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    user      User     @relation(fields: [userId], references: [id])
 }
