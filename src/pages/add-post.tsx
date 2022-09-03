@@ -15,7 +15,6 @@ const AddPost = () => {
 	const { mutate, isLoading, error } = trpc.useMutation(["posts.add-post"]);
 	const router = useRouter();
 	const qc = useQueryClient();
-	// const [focus, setFocus] = useState(false);
 
 	const [titleError, setTitleError] = useState("");
 	const [bodyError, setBodyError] = useState("");
@@ -113,15 +112,6 @@ const AddPost = () => {
 						</div>
 						<div className="flex flex-col-reverse gap-2 font-bold">
 							{bodyError && <small className="text-red-500">{bodyError}</small>}
-							{/* <textarea
-								value={bodyValue}
-								className={`outline-none border-none bg-neutral-800 p-1 focus-visible:ring-2 focus-visible:ring-fuchsia-500 transition-all ease-in peer rounded h-[28rem] ${
-									bodyError !== "" && "ring-2 ring-red-500"
-								}`}
-								onChange={(e) => setBodyValue(e.target.value)}
-								onFocus={() => setBodyError("")}
-								id={bodyID}
-							/> */}
 							<div
 								className={`relative outline-none border-none bg-neutral-800 transition-all ease-in peer rounded ${
 									bodyError !== "" && "ring-2 ring-red-500"
