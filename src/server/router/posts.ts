@@ -8,6 +8,7 @@ export const postsRouter = createRouter().query("getAllPosts", {
 				title: true,
 				user: {
 					select: {
+						id: true,
 						name: true,
 					},
 				},
