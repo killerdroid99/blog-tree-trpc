@@ -1,21 +1,42 @@
 import Navbar from "$/components/Navbar";
+import Tiptap from "$/components/RichText";
 import { trpc } from "$/utils/trpc";
+import { useEditor } from "@tiptap/react";
+import StarterKit from "@tiptap/starter-kit";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { FormEvent, useEffect, useId, useState } from "react";
 import { useQueryClient } from "react-query";
+import Image from "@tiptap/extension-image";
 
 const AddPost = () => {
 	const titleID = useId();
-	const bodyID = useId();
 	const [titleValue, setTitleValue] = useState("");
-	const [bodyValue, setBodyValue] = useState("");
 	const { mutate, isLoading, error } = trpc.useMutation(["posts.add-post"]);
 	const router = useRouter();
 	const qc = useQueryClient();
+	// const [focus, setFocus] = useState(false);
 
 	const [titleError, setTitleError] = useState("");
 	const [bodyError, setBodyError] = useState("");
+
+	const Editor = useEditor({
+		extensions: [StarterKit, Image],
+		onFocus: () => {
+			setBodyError("");
+		},
+		editorProps: {
+			attributes: {
+				class:
+					"min-h-[28rem] px-4 pb-1 pt-8 focus-visible:ring-2 focus-visible:ring-fuchsia-500 transition-all ease-in rounded font-sans font-normal",
+			},
+		},
+		content: `
+      <p>
+				Enter post body...
+      </p>
+    `,
+	});
 
 	useEffect(() => {
 		if (error) {
@@ -36,18 +57,21 @@ const AddPost = () => {
 		e.preventDefault();
 		setTitleError("");
 		setBodyError("");
-		mutate(
-			{
-				title: titleValue,
-				body: bodyValue,
-			},
-			{
-				onSuccess() {
-					qc.invalidateQueries(["posts.getAllPosts"]);
-					router.push("/");
+		const body = Editor?.getHTML();
+		if (typeof body === "string") {
+			mutate(
+				{
+					title: titleValue,
+					body: body,
 				},
-			}
-		);
+				{
+					onSuccess() {
+						qc.invalidateQueries(["posts.getAllPosts"]);
+						router.push("/");
+					},
+				}
+			);
+		}
 	};
 	return (
 		<>
@@ -89,7 +113,7 @@ const AddPost = () => {
 						</div>
 						<div className="flex flex-col-reverse gap-2 font-bold">
 							{bodyError && <small className="text-red-500">{bodyError}</small>}
-							<textarea
+							{/* <textarea
 								value={bodyValue}
 								className={`outline-none border-none bg-neutral-800 p-1 focus-visible:ring-2 focus-visible:ring-fuchsia-500 transition-all ease-in peer rounded h-[28rem] ${
 									bodyError !== "" && "ring-2 ring-red-500"
@@ -97,15 +121,14 @@ const AddPost = () => {
 								onChange={(e) => setBodyValue(e.target.value)}
 								onFocus={() => setBodyError("")}
 								id={bodyID}
-							/>
-							<label
-								htmlFor={bodyID}
-								className={`transition-all ease-in peer-focus-visible:text-fuchsia-500 ${
-									bodyError !== "" && "text-red-500"
+							/> */}
+							<div
+								className={`relative outline-none border-none bg-neutral-800 transition-all ease-in peer rounded ${
+									bodyError !== "" && "ring-2 ring-red-500"
 								}`}
 							>
-								Body
-							</label>
+								<Tiptap editor={Editor} />
+							</div>
 						</div>
 						<button className="p-1 rounded font-semibold bg-blue-500 hover:bg-blue-600 focus:ring-fuchsia-500 focus:ring-2 focus:ring-offset-2 transition-all ease-in outline-none border-none">
 							{isLoading ? (

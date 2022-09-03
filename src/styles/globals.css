@@ -2,3 +2,90 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.ProseMirror {
+	border: none;
+	outline: none;
+}
+
+.ProseMirror h1 {
+	@apply text-[2rem] font-extrabold;
+}
+
+.ProseMirror h2 {
+	@apply text-[1.75rem] font-extrabold;
+}
+
+.ProseMirror h3 {
+	@apply text-[1.5rem] font-extrabold;
+}
+
+.ProseMirror p {
+	@apply my-4;
+}
+
+.ProseMirror img {
+	@apply my-4;
+}
+
+.ProseMirror code {
+	@apply bg-neutral-900;
+}
+
+.ProseMirror ul {
+	list-style-type: disc;
+}
+
+.ProseMirror li {
+	@apply ml-4;
+}
+
+.ProseMirror pre {
+	@apply px-4;
+}
+
+.ProseMirror pre code {
+	@apply bg-inherit text-white;
+}
+
+.Prose {
+	border: none;
+	outline: none;
+	@apply p-4 rounded-md text-sm relative;
+}
+
+.Prose h1 {
+	@apply text-[2rem] font-extrabold;
+}
+
+.Prose h2 {
+	@apply text-[1.75rem] font-extrabold;
+}
+
+.Prose h3 {
+	@apply text-[1.5rem] font-extrabold;
+}
+
+.Prose code {
+	@apply bg-neutral-900/40 text-black;
+}
+
+.Prose ul {
+	list-style-type: disc;
+}
+
+.Prose li {
+	@apply ml-4;
+}
+
+.Prose pre {
+	@apply px-4;
+}
+
+.Prose pre code {
+	@apply bg-inherit text-white;
+}
+
+#__next {
+	@apply flex flex-col;
+}
