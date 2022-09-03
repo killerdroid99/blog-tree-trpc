@@ -1,5 +1,6 @@
 import { formatDistanceToNow } from "date-fns";
 import { useSession } from "next-auth/react";
+import Link from "next/link";
 
 interface PostProps {
 	title: string;
@@ -55,9 +56,11 @@ const Post = ({ post }: { post: PostProps }) => {
 					</svg>
 					<span>{post.votes}</span>
 				</button>
-				<span className="text-cyan-400 cursor-pointer hover:underline underline-offset-2 text-sm decoration-1">
-					View Post
-				</span>
+				<Link href={`/posts/${post.id}`}>
+					<span className="text-cyan-400 cursor-pointer hover:underline underline-offset-2 text-sm decoration-1 font-semibold">
+						View Post
+					</span>
+				</Link>
 			</div>
 		</div>
 	);
