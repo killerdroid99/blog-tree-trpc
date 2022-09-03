@@ -31,9 +31,13 @@ export const protectedPostRouter = createProtectedRouter().mutation(
 		input: z.object({
 			title: z
 				.string()
-				.min(5, "Post title is too short")
-				.max(50, "Title is too long"),
-			body: z.string().min(5, "Post body is too short"),
+				.trim()
+				.min(5, "Post title must be 5 or more characters long")
+				.max(50, "Post title must be 50 or fewer characters long"),
+			body: z
+				.string()
+				.trim()
+				.min(25, "Post body must be 25 or more characters long"),
 		}),
 		async resolve({ ctx, input }) {
 			const newPost = await ctx.prisma.posts.create({

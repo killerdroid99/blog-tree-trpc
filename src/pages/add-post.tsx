@@ -2,7 +2,7 @@ import Navbar from "$/components/Navbar";
 import { trpc } from "$/utils/trpc";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { FormEvent, useId, useState } from "react";
+import { FormEvent, useEffect, useId, useState } from "react";
 import { useQueryClient } from "react-query";
 
 const AddPost = () => {
@@ -14,8 +14,28 @@ const AddPost = () => {
 	const router = useRouter();
 	const qc = useQueryClient();
 
+	const [titleError, setTitleError] = useState("");
+	const [bodyError, setBodyError] = useState("");
+
+	useEffect(() => {
+		if (error) {
+			const msg = JSON.parse(error.message);
+
+			if (msg.length === 2) {
+				setTitleError(msg[0].message);
+				setBodyError(msg[1].message);
+			} else if (msg[0].path[0] === "title") {
+				setTitleError(msg[0].message);
+			} else {
+				setBodyError(msg[0].message);
+			}
+		}
+	}, [error]);
+
 	const handleSubmit = (e: FormEvent) => {
 		e.preventDefault();
+		setTitleError("");
+		setBodyError("");
 		mutate(
 			{
 				title: titleValue,
@@ -45,30 +65,44 @@ const AddPost = () => {
 						onSubmit={(e) => handleSubmit(e)}
 					>
 						<div className="flex flex-col-reverse gap-2 font-bold">
+							{titleError && (
+								<small className="text-red-500">{titleError}</small>
+							)}
 							<input
 								type="text"
-								className="outline-none border-none bg-neutral-800 p-1 focus-visible:ring-2 focus-visible:ring-fuchsia-500 transition-all ease-in peer rounded"
+								className={`outline-none border-none bg-neutral-800 p-1 focus-visible:ring-2 focus-visible:ring-fuchsia-500 transition-all ease-in peer rounded ${
+									titleError !== "" && "ring-2 ring-red-500"
+								}`}
 								value={titleValue}
 								onChange={(e) => setTitleValue(e.target.value)}
+								onFocus={() => setTitleError("")}
 								id={titleID}
 							/>
 							<label
 								htmlFor={titleID}
-								className="transition-all ease-in peer-focus-visible:text-fuchsia-500"
+								className={`transition-all ease-in peer-focus-visible:text-fuchsia-500 ${
+									titleError !== "" && "text-red-500"
+								}`}
 							>
 								Title
 							</label>
 						</div>
 						<div className="flex flex-col-reverse gap-2 font-bold">
+							{bodyError && <small className="text-red-500">{bodyError}</small>}
 							<textarea
 								value={bodyValue}
-								className="outline-none border-none bg-neutral-800 p-1 focus-visible:ring-2 focus-visible:ring-fuchsia-500 transition-all ease-in peer rounded h-[28rem]"
+								className={`outline-none border-none bg-neutral-800 p-1 focus-visible:ring-2 focus-visible:ring-fuchsia-500 transition-all ease-in peer rounded h-[28rem] ${
+									bodyError !== "" && "ring-2 ring-red-500"
+								}`}
 								onChange={(e) => setBodyValue(e.target.value)}
+								onFocus={() => setBodyError("")}
 								id={bodyID}
 							/>
 							<label
 								htmlFor={bodyID}
-								className="transition-all ease-in peer-focus-visible:text-fuchsia-500"
+								className={`transition-all ease-in peer-focus-visible:text-fuchsia-500 ${
+									bodyError !== "" && "text-red-500"
+								}`}
 							>
 								Body
 							</label>
