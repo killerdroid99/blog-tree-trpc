@@ -2,28 +2,49 @@ import { z } from "zod";
 import { createRouter } from "./context";
 import { createProtectedRouter } from "./protected-router";
 
-export const postsRouter = createRouter().query("getAllPosts", {
-	async resolve({ ctx }) {
-		const allPosts = await ctx.prisma.posts.findMany({
-			select: {
-				id: true,
-				title: true,
-				user: {
-					select: {
-						id: true,
-						name: true,
+export const postsRouter = createRouter()
+	.query("getAllPosts", {
+		async resolve({ ctx }) {
+			const allPosts = await ctx.prisma.posts.findMany({
+				select: {
+					id: true,
+					title: true,
+					user: {
+						select: {
+							id: true,
+							name: true,
+						},
+					},
+					votes: true,
+					createdAt: true,
+				},
+				orderBy: {
+					createdAt: "desc",
+				},
+			});
+			return allPosts;
+		},
+	})
+	.query("getPostById", {
+		input: z.object({
+			postId: z.string().min(1),
+		}),
+		async resolve({ input, ctx }) {
+			const post = await ctx.prisma.posts.findUnique({
+				where: {
+					id: input.postId,
+				},
+				include: {
+					user: {
+						select: {
+							name: true,
+						},
 					},
 				},
-				votes: true,
-				createdAt: true,
-			},
-			orderBy: {
-				createdAt: "desc",
-			},
-		});
-		return allPosts;
-	},
-});
+			});
+			return post;
+		},
+	});
 
 export const protectedPostRouter = createProtectedRouter().mutation(
 	"add-post",
