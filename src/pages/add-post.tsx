@@ -57,7 +57,7 @@ const AddPost = () => {
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
 
-			<main className="flex flex-col items-center pt-28 h-screen w-screen bg-neutral-800 text-slate-50 font-raleway">
+			<main className="flex flex-col items-center pt-28 h-screen w-screen bg-neutral-800 text-slate-50 font-raleway overflow-y-scroll pb-4">
 				<Navbar />
 				<div className="grid place-items-center gap-6 w-[96vw] xl:w-[50vw] relative bg-neutral-500/20 rounded-md">
 					<form

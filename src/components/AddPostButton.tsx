@@ -12,7 +12,7 @@ const AddPostButton = ({ extraClassNames }: AddPostButtonProps) => {
 		return (
 			<Link href="/add-post">
 				<button
-					className={`${extraClassNames} inline-flex items-center space-x-2 bg-emerald-500 hover:bg-emerald-600 text-sm font-bold py-1 px-3 rounded-full transition-all ease-in`}
+					className={`${extraClassNames} inline-flex items-center space-x-2 bg-emerald-500/60 backdrop-blur-sm hover:bg-emerald-600 text-sm font-bold py-1 px-3 rounded-full transition-all ease-in`}
 				>
 					<div>
 						<svg

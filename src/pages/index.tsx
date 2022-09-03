@@ -18,7 +18,7 @@ const Home: NextPage = () => {
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
 
-			<main className="flex flex-col items-center pt-28 h-screen w-screen bg-neutral-800 text-slate-50 font-raleway overflow-y-scroll">
+			<main className="flex flex-col items-center pt-28 h-screen w-screen bg-neutral-800 text-slate-50 font-raleway overflow-y-scroll pb-4">
 				<Navbar />
 				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-[96vw] xl:w-[76vw] relative">
 					<AddPostButton extraClassNames="fixed right-[1rem] xl:right-[12vw] top-[4rem]" />

@@ -6,7 +6,7 @@ const Navbar = () => {
 	const { data: session, status } = useSession();
 
 	return (
-		<header className="flex bg-neutral-800 border-b border-neutral-600/50 py-2 px-4 lg:px-[10vw] justify-between w-full fixed top-0">
+		<header className="flex bg-neutral-800 z-10 border-b border-neutral-600/50 py-2 px-1 sm:px-4 lg:px-[10vw] justify-between w-full fixed top-0">
 			<Link href="/">
 				<button className="cursor-pointer focus-visible:underline underline-offset-2 decoration-fuchsia-500 outline-none border-none focus-visible:text-fuchsia-500">
 					<h2 className="text-xl font-bold font-mono">
@@ -26,8 +26,8 @@ const Navbar = () => {
 					</div>
 				)}
 				{status === "authenticated" && (
-					<div className="space-x-6 flex items-center">
-						<span className="font-bold text-sm flex items-center gap-2">
+					<div className="space-x-2 sm:space-x-6 flex items-center">
+						<span className="font-bold text-xs sm:text-sm flex items-center gap-2">
 							<Image
 								src={session.user?.image as string}
 								alt={session.user?.name as string}
