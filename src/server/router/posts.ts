@@ -15,7 +15,11 @@ export const postsRouter = createRouter()
 							name: true,
 						},
 					},
-					votes: true,
+					_count: {
+						select: {
+							Votes: true,
+						},
+					},
 					createdAt: true,
 				},
 				orderBy: {
@@ -107,5 +111,33 @@ export const protectedPostRouter = createProtectedRouter()
 				},
 			});
 			return updatedPost;
+		},
+	})
+	.mutation("vote-post", {
+		input: z.object({
+			postId: z.string().min(1),
+		}),
+		async resolve({ ctx, input }) {
+			const vote = await ctx.prisma.votes.create({
+				data: {
+					postId: input.postId,
+					userId: ctx.session.user.id,
+				},
+			});
+			return vote;
+		},
+	})
+	.mutation("unvote-post", {
+		input: z.object({
+			postId: z.string().min(1),
+		}),
+		async resolve({ ctx, input }) {
+			const vote = await ctx.prisma.votes.deleteMany({
+				where: {
+					postId: input.postId,
+					userId: ctx.session.user.id,
+				},
+			});
+			return vote;
 		},
 	});
