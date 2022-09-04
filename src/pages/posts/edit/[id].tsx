@@ -8,6 +8,7 @@ import { useRouter } from "next/router";
 import { FormEvent, useEffect, useId, useState } from "react";
 import { useQueryClient } from "react-query";
 import Image from "@tiptap/extension-image";
+import Link from "next/link";
 
 const UpdatePost = () => {
 	const titleID = useId();
@@ -85,6 +86,25 @@ const UpdatePost = () => {
 			<main className="flex flex-col items-center pt-28 h-screen w-screen bg-neutral-800 text-slate-50 font-raleway overflow-y-scroll pb-4">
 				<Navbar />
 				<div className="grid place-items-center gap-6 w-[96vw] xl:w-[50vw] relative bg-neutral-500/20 rounded-md">
+					<Link href={`/posts/${router.query.id}`}>
+						<button className="absolute right-4 top-2 flex items-center space-x-2 z-10 hover:text-indigo-400 font-bold transition-colors ease-in">
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								fill="none"
+								viewBox="0 0 24 24"
+								strokeWidth="1.5"
+								stroke="currentColor"
+								className="w-4 h-4"
+							>
+								<path
+									strokeLinecap="round"
+									strokeLinejoin="round"
+									d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3"
+								/>
+							</svg>
+							<span className="text-sm mt-[0.3rem]">Back to posts</span>
+						</button>
+					</Link>
 					<form
 						className="flex flex-col px-6 py-4 space-y-4 w-full"
 						onSubmit={(e) => handleSubmit(e)}
