@@ -3,17 +3,21 @@ import { useSession } from "next-auth/react";
 import Link from "next/link";
 
 interface PostProps {
-	title: string;
-	user: {
+	post: {
+		user: {
+			id: string;
+			name: string | null;
+		};
 		id: string;
-		name: string | null;
+		title: string;
+		createdAt: Date;
+		_count: {
+			Votes: number;
+		};
 	};
-	id: string;
-	votes: number;
-	createdAt: Date;
 }
 
-const Post = ({ post }: { post: PostProps }) => {
+const Post = ({ post }: PostProps) => {
 	const formattedCreatedAt = formatDistanceToNow(new Date(post.createdAt), {
 		addSuffix: true,
 	});
@@ -60,7 +64,7 @@ const Post = ({ post }: { post: PostProps }) => {
 							clipRule="evenodd"
 						/>
 					</svg>
-					<span>{post.votes}</span>
+					<span>{post._count.Votes}</span>
 				</div>
 				<Link href={`/posts/${post.id}`}>
 					<button
