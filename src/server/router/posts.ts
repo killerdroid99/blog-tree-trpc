@@ -44,6 +44,11 @@ export const postsRouter = createRouter()
 							name: true,
 						},
 					},
+					_count: {
+						select: {
+							Votes: true,
+						},
+					},
 				},
 			});
 			return post;
@@ -118,26 +123,31 @@ export const protectedPostRouter = createProtectedRouter()
 			postId: z.string().min(1),
 		}),
 		async resolve({ ctx, input }) {
-			const vote = await ctx.prisma.votes.create({
+			const vote = await ctx.prisma.votes.findUnique({
+				where: {
+					userId_postId: {
+						postId: input.postId,
+						userId: ctx.session.user.id,
+					},
+				},
+			});
+			if (vote) {
+				await ctx.prisma.votes.delete({
+					where: {
+						userId_postId: {
+							postId: input.postId,
+							userId: ctx.session.user.id,
+						},
+					},
+				});
+				return { msg: "removed vote" };
+			}
+			await ctx.prisma.votes.create({
 				data: {
 					postId: input.postId,
 					userId: ctx.session.user.id,
 				},
 			});
-			return vote;
-		},
-	})
-	.mutation("unvote-post", {
-		input: z.object({
-			postId: z.string().min(1),
-		}),
-		async resolve({ ctx, input }) {
-			const vote = await ctx.prisma.votes.deleteMany({
-				where: {
-					postId: input.postId,
-					userId: ctx.session.user.id,
-				},
-			});
-			return vote;
+			return { msg: "voted" };
 		},
 	});
