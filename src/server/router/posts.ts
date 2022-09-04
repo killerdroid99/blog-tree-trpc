@@ -151,4 +151,24 @@ export const protectedPostRouter = createProtectedRouter()
 			});
 			return { msg: "voted" };
 		},
+	})
+	.mutation("add-comment", {
+		input: z.object({
+			body: z
+				.string()
+				.trim()
+				.min(5, "Comment body must be 5 or more characters long")
+				.max(500, "Comment body must be 500 or fewer characters long"),
+			postId: z.string().min(1),
+		}),
+		async resolve({ ctx, input }) {
+			const newComment = await ctx.prisma.comments.create({
+				data: {
+					userId: ctx.session.user.id,
+					postId: input.postId,
+					body: input.body,
+				},
+			});
+			return newComment;
+		},
 	});
