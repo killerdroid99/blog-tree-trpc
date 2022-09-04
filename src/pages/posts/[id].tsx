@@ -1,3 +1,4 @@
+import CommentForm from "$/components/CommentForm";
 import DeletePostButton from "$/components/DeletePostButton";
 import EditPostButton from "$/components/EditPostButton";
 import Navbar from "$/components/Navbar";
@@ -57,7 +58,9 @@ const PostPage = () => {
 						<div
 							dangerouslySetInnerHTML={{ __html: data?.body as string }}
 							className="ProseMirror mt-8"
-						></div>
+						/>
+						<hr className="h-1 w-full border-dashed border-gray-500" />
+						<CommentForm postId={router.query.id as string} />
 					</div>
 				)}
 			</main>
