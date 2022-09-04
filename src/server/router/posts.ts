@@ -54,6 +54,30 @@ export const postsRouter = createRouter()
 			});
 			return post;
 		},
+	})
+	.query("getCommentsForPost", {
+		input: z.object({
+			postId: z.string().min(1),
+		}),
+		async resolve({ ctx, input }) {
+			const comments = await ctx.prisma.comments.findMany({
+				where: {
+					postId: input.postId,
+				},
+				orderBy: {
+					createdAt: "desc",
+				},
+				include: {
+					user: {
+						select: {
+							name: true,
+							image: true,
+						},
+					},
+				},
+			});
+			return comments;
+		},
 	});
 
 export const protectedPostRouter = createProtectedRouter()
