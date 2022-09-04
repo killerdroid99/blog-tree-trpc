@@ -1,6 +1,7 @@
 import DeletePostButton from "$/components/DeletePostButton";
 import EditPostButton from "$/components/EditPostButton";
 import Navbar from "$/components/Navbar";
+import VotingButton from "$/components/VotingButton";
 import { trpc } from "$/utils/trpc";
 import { useSession } from "next-auth/react";
 import Head from "next/head";
@@ -38,6 +39,11 @@ const PostPage = () => {
 								userId={data?.userId as string}
 							/>
 						</div>
+						<VotingButton
+							postId={router.query.id as string}
+							extraClassNames="fixed left-[1rem] xl:left-[2vw] top-[4rem] z-10"
+							votes={data?._count.Votes as number}
+						/>
 						<div className="flex flex-col items-end">
 							<h1 className="text-center text-4xl font-extrabold mb-1 font-serif underline underline-offset-4 decoration-2 decoration-fuchsia-500">
 								{data?.title}
