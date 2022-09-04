@@ -71,7 +71,6 @@ model Posts {
     title     String     @db.Text
     body      String     @db.Text
     userId    String
-    // votes     Int        @default(0)
     createdAt DateTime   @default(now())
     updatedAt DateTime   @updatedAt
     user      User       @relation(fields: [userId], references: [id])
@@ -80,18 +79,20 @@ model Posts {
 }
 
 model Votes {
-    id     String @id @default(uuid())
     userId String
     postId String
     user   User   @relation(fields: [userId], references: [id])
     post   Posts  @relation(fields: [postId], references: [id])
+
+    @@id([userId, postId])
 }
 
 model Comments {
-    id     String @id @default(uuid())
     userId String
     postId String
     body   String @db.Text
     user   User   @relation(fields: [userId], references: [id])
     post   Posts  @relation(fields: [postId], references: [id])
+
+    @@id([userId, postId])
 }
