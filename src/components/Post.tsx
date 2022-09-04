@@ -23,7 +23,13 @@ const Post = ({ post }: { post: PostProps }) => {
 	return (
 		<div className="bg-gray-500/20 px-4 py-2 rounded mx-auto w-full space-y-14 shadow-md">
 			<span className="flex justify-between items-center">
-				<h3 className="text-xl font-bold">{post.title}</h3>
+				<h3 className="text-xl font-bold" title={post.title}>
+					{post.title.length < 25 ? (
+						<>{post.title}</>
+					) : (
+						<>{post.title.slice(0, 25)}...</>
+					)}
+				</h3>
 				<div className="flex flex-col text-right">
 					<p className="text-neutral-400 text-xs tracking-wide">
 						created by{" "}
@@ -41,7 +47,7 @@ const Post = ({ post }: { post: PostProps }) => {
 				</div>
 			</span>
 			<div className="inline-flex justify-between w-full">
-				<button className="px-2 ring-1 ring-fuchsia-500 hover:bg-fuchsia-500/20 text-inherit font-bold inline-flex items-center space-x-1 font-raleway rounded-full cursor-default">
+				<div className="px-2 ring-1 ring-fuchsia-500 hover:bg-fuchsia-500/20 text-inherit font-bold inline-flex items-center space-x-1 font-raleway rounded-full cursor-default">
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						viewBox="0 0 20 20"
@@ -55,11 +61,14 @@ const Post = ({ post }: { post: PostProps }) => {
 						/>
 					</svg>
 					<span>{post.votes}</span>
-				</button>
+				</div>
 				<Link href={`/posts/${post.id}`}>
-					<span className="text-cyan-400 cursor-pointer hover:underline underline-offset-2 text-sm decoration-1 font-semibold">
+					<button
+						tabIndex={0}
+						className="text-cyan-400 cursor-pointer hover:underline underline-offset-2 text-sm decoration-1 font-semibold translate-y-1 focus-visible:outline-none focus-visible:border-none focus-visible:underline"
+					>
 						View Post
-					</span>
+					</button>
 				</Link>
 			</div>
 		</div>
