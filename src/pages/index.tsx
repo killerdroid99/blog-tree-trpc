@@ -15,6 +15,10 @@ const Home: NextPage = () => {
 				<AddPostButton extraClassNames="fixed right-[1rem] xl:right-[12vw] top-[4rem]" />
 				{isLoading ? (
 					<div className="text-center w-full col-span-3">Loading posts...</div>
+				) : data?.length === 0 ? (
+					<span className="col-span-3 text-center font-bold tracking-wide">
+						No posts found 🥲
+					</span>
 				) : (
 					data?.map((post) => <Post post={post} key={post.id} />)
 				)}
