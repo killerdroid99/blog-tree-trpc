@@ -1,20 +1,26 @@
 import { signIn, signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
+import { useTheme } from "next-themes";
+import { RiMoonClearLine, RiSunLine } from "react-icons/ri";
+import { useEffect, useState } from "react";
 
 const Navbar = () => {
 	const { data: session, status } = useSession();
+	const { theme, setTheme } = useTheme();
+	const [mounted, setMounted] = useState(false);
+	useEffect(() => setMounted(true), []);
 
 	return (
-		<header className="flex bg-neutral-800 z-10 border-b border-neutral-600/50 py-2 px-1 sm:px-4 lg:px-[10vw] justify-between w-full fixed top-0">
+		<header className="flex bg-neutral-100/80 dark:bg-neutral-800/80 backdrop-blur-sm z-10 border-b border-neutral-400/50 dark:border-neutral-600/50 py-2 px-1 sm:px-4 lg:px-[10vw] justify-between w-full fixed top-0">
 			<Link href="/">
-				<button className="cursor-pointer focus-visible:underline underline-offset-2 decoration-fuchsia-500 outline-none border-none focus-visible:text-fuchsia-500">
+				<button className="cursor-pointer focus-visible:underline underline-offset-2 decoration-fuchsia-500 outline-none border-none focus-visible:text-fuchsia-500 text-inherit">
 					<h2 className="text-xl font-bold font-mono">
 						Blog<span className="text-fuchsia-500 ml-1">Tree</span>
 					</h2>
 				</button>
 			</Link>
-			<nav>
+			<nav className="flex items-center">
 				{status === "unauthenticated" && (
 					<div>
 						<button
@@ -51,6 +57,16 @@ const Navbar = () => {
 							Loading...
 						</button>
 					</div>
+				)}
+				{mounted && (
+					<button
+						className="text-inherit focus-visible:ring-fuchsia-500 focus-visible:text-fuchsia-500 hover:text-fuchsia-500 inline-grid place-items-center mx-2 rounded bg-neutral-300 dark:bg-neutral-700 p-2 text-lg hover:ring-2 ring-fuchsia-500 border-none outline-none focus-visible:ring-2"
+						onClick={() => {
+							theme === "light" ? setTheme("dark") : setTheme("light");
+						}}
+					>
+						{theme === "light" ? <RiSunLine /> : <RiMoonClearLine />}
+					</button>
 				)}
 			</nav>
 		</header>

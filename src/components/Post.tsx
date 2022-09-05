@@ -26,7 +26,7 @@ const Post = ({ post }: PostProps) => {
 	const { data: session } = useSession();
 
 	return (
-		<div className="bg-gray-500/20 px-4 py-2 rounded mx-auto w-full space-y-14 shadow-md">
+		<div className="bg-neutral-200 dark:bg-gray-500/20 px-4 py-2 rounded mx-auto w-full space-y-14 shadow-md">
 			<span className="flex justify-between items-center">
 				<h3 className="text-xl font-bold" title={post.title}>
 					{post.title.length < 25 ? (
@@ -36,7 +36,7 @@ const Post = ({ post }: PostProps) => {
 					)}
 				</h3>
 				<div className="flex flex-col text-right">
-					<p className="text-neutral-400 text-xs tracking-wide">
+					<p className="text-neutral-700 dark:text-neutral-400 text-xs tracking-wide">
 						created by{" "}
 						<strong className="text-fuchsia-500">
 							{session?.user?.id === post.user.id ? (
@@ -46,7 +46,7 @@ const Post = ({ post }: PostProps) => {
 							)}
 						</strong>
 					</p>
-					<p className="text-neutral-300 text-xs tracking-wide">
+					<p className="text-neutral-600 dark:text-neutral-300 text-xs tracking-wide">
 						{formattedCreatedAt}
 					</p>
 				</div>
