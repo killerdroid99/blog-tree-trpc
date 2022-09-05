@@ -81,8 +81,8 @@ model Posts {
 model Votes {
     userId String
     postId String
-    user   User   @relation(fields: [userId], references: [id])
-    post   Posts  @relation(fields: [postId], references: [id])
+    user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+    post   Posts  @relation(fields: [postId], references: [id], onDelete: Cascade)
 
     @@id([userId, postId])
 }
