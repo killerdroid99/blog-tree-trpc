@@ -80,6 +80,14 @@ const Comment = ({ comment, postOwnerId }: CommentProps) => {
 						onClick={handleDelete}
 					/>
 				)}
+				{session?.user?.id !== postOwnerId &&
+					session?.user?.id === comment.userId && (
+						<FaRegTrashAlt
+							className="cursor-pointer hover:text-red-500"
+							title="Delete comment"
+							onClick={handleDelete}
+						/>
+					)}
 				{session?.user?.id === comment.userId && (
 					<FaPencilAlt
 						className="cursor-pointer hover:text-amber-500"
@@ -98,7 +106,7 @@ const Comment = ({ comment, postOwnerId }: CommentProps) => {
 				/>
 			</div>
 			<h4 className="text-fuchsia-500 font-bold flex items-center">
-				{comment.user.name}{" "}
+				{session?.user?.id === comment.userId ? "You" : comment.user.name}{" "}
 				<span className="text-xs text-neutral-500 inline ml-2">
 					{formattedCreatedAt}
 				</span>{" "}

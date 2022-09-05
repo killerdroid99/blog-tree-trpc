@@ -55,18 +55,19 @@ export const postsRouter = createRouter()
 				},
 			});
 
-			const getVotesStatus = await ctx.prisma.votes.findUnique({
-				where: {
-					userId_postId: {
-						userId: ctx.session?.user?.id as string,
-						postId: input.postId,
+			if (ctx.session) {
+				const getVotesStatus = await ctx.prisma.votes.findUnique({
+					where: {
+						userId_postId: {
+							userId: ctx.session?.user?.id as string,
+							postId: input.postId,
+						},
 					},
-				},
-			});
+				});
 
-			console.log(getVotesStatus);
-			if (getVotesStatus) {
-				return { ...post, voted: true };
+				if (getVotesStatus) {
+					return { ...post, voted: true };
+				}
 			}
 
 			return { ...post, voted: false };
