@@ -48,6 +48,7 @@ export const postsRouter = createRouter()
 					_count: {
 						select: {
 							Votes: true,
+							Comments: true,
 						},
 					},
 				},

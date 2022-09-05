@@ -1,5 +1,5 @@
 import { trpc } from "$/utils/trpc";
-import { useSession } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { useQueryClient } from "react-query";
 
 interface VotingButtonProps {
@@ -47,7 +47,28 @@ const VotingButton = ({
 		);
 	}
 
-	return <></>;
+	return (
+		<div
+			className={
+				extraClassNames +
+				" flex w-full items-center  text-sm space-x-3 font-sans"
+			}
+		>
+			<div className="flex cursor-default items-center bg-yellow-700/50 ring-[2px] ring-yellow-700/80 font-bold rounded-full px-2 space-x-2 py-px">
+				<div className="flex-1">{votes}</div>
+				<span className="lining-nums">{votes === 1 ? "vote" : "votes"}</span>
+			</div>
+			<span className="font-bold">
+				<span
+					className="text-fuchsia-500 mx-1 cursor-pointer"
+					onClick={() => signIn()}
+				>
+					Login
+				</span>{" "}
+				to Vote & comment
+			</span>
+		</div>
+	);
 };
 
 export default VotingButton;

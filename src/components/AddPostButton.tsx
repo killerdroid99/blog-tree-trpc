@@ -1,4 +1,4 @@
-import { useSession } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import Link from "next/link";
 
 interface AddPostButtonProps {
@@ -36,7 +36,17 @@ const AddPostButton = ({ extraClassNames }: AddPostButtonProps) => {
 		);
 	}
 
-	return <></>;
+	return (
+		<span className={extraClassNames + " text-sm font-bold "}>
+			<span
+				className="text-fuchsia-500 mx-1 cursor-pointer"
+				onClick={() => signIn()}
+			>
+				Login
+			</span>{" "}
+			to add Posts
+		</span>
+	);
 };
 
 export default AddPostButton;
