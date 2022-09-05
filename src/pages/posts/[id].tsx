@@ -69,8 +69,8 @@ const PostPage = () => {
 							<CommentForm postId={router.query.id as string} />
 							<div className="flex flex-col items-center mt-2 flex-1">
 								<strong className="mb-1 font-sans">
-									{data?._count.Comments}{" "}
-									{data?._count.Comments === 1 ? "comment" : "comments"}
+									{comments?.length}{" "}
+									{comments?.length === 1 ? "comment" : "comments"}
 								</strong>
 								<div className="overflow-y-scroll max-h-[30rem] space-y-1 w-full p-2">
 									{isCommentsLoading ? (
