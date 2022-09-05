@@ -6,19 +6,17 @@ interface VotingButtonProps {
 	extraClassNames?: string;
 	votes: number;
 	postId: string;
+	isVoted: boolean;
 }
 
 const VotingButton = ({
 	extraClassNames,
 	votes,
 	postId,
+	isVoted,
 }: VotingButtonProps) => {
 	const { data: session } = useSession();
-	const {
-		mutate: vote,
-		isLoading,
-		data,
-	} = trpc.useMutation(["posts.vote-post"]);
+	const { mutate: vote, isLoading } = trpc.useMutation(["posts.vote-post"]);
 	const qc = useQueryClient();
 
 	const handleVote = () => {
@@ -41,7 +39,7 @@ const VotingButton = ({
 				<div className="flex-1 text-base text-center px-3">{votes}</div>
 				<div className="w-[2px] h-8 bg-yellow-700/80" />
 				<span className="px-3">
-					{isLoading ? "saving" : data?.msg === "voted" ? "voted!" : "vote?"}
+					{isLoading ? "saving" : isVoted ? "voted!" : "vote?"}
 				</span>
 			</button>
 		);

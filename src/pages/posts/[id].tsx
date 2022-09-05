@@ -41,7 +41,7 @@ const PostPage = () => {
 							</h1>
 							<span className="text-sm text-neutral-300 font-raleway font-semibold w-fit -translate-x-2">
 								~ By{" "}
-								<span className="text-fuchsia-500">{data?.user.name} </span>
+								<span className="text-fuchsia-500">{data?.user?.name} </span>
 								{data?.userId === session?.user?.id && <>(You)</>}
 							</span>
 						</div>
@@ -64,7 +64,8 @@ const PostPage = () => {
 							<VotingButton
 								postId={router.query.id as string}
 								extraClassNames="absolute top-1"
-								votes={data?._count.Votes as number}
+								votes={data?._count?.Votes as number}
+								isVoted={data?.voted as boolean}
 							/>
 							<CommentForm postId={router.query.id as string} />
 							<div className="flex flex-col items-center mt-2 flex-1">
