@@ -1,3 +1,4 @@
+import Comment from "$/components/Comment";
 import CommentForm from "$/components/CommentForm";
 import DeletePostButton from "$/components/DeletePostButton";
 import EditPostButton from "$/components/EditPostButton";
@@ -13,6 +14,10 @@ const PostPage = () => {
 	const { data: session } = useSession();
 	const { data, isLoading } = trpc.useQuery([
 		"posts.getPostById",
+		{ postId: router.query.id as string },
+	]);
+	const { data: comments, isLoading: isCommentsLoading } = trpc.useQuery([
+		"posts.getCommentsForPost",
 		{ postId: router.query.id as string },
 	]);
 
@@ -60,7 +65,19 @@ const PostPage = () => {
 							className="ProseMirror mt-8"
 						/>
 						<hr className="h-1 w-full border-dashed border-gray-500" />
-						<CommentForm postId={router.query.id as string} />
+						<div className="flex flex-col sm:flex-row w-full">
+							<CommentForm postId={router.query.id as string} />
+							<div className="flex flex-col items-center mt-2 p-2 space-y-1 overflow-y-scroll max-h-[30rem] flex-1">
+								<strong className="mb-1">Comments</strong>
+								{isCommentsLoading ? (
+									<span className="animate-pulse">Loading Comments...</span>
+								) : (
+									comments?.map((comment) => (
+										<Comment key={comment.id} comment={comment} />
+									))
+								)}
+							</div>
+						</div>
 					</div>
 				)}
 			</main>
