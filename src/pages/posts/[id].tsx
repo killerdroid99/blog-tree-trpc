@@ -34,22 +34,7 @@ const PostPage = () => {
 				{isLoading ? (
 					<span className="animate-pulse">Loading Post...</span>
 				) : (
-					<div className="grid place-items-center w-[96vw] xl:w-[76vw] relative">
-						<div className="fixed right-[1rem] xl:right-[2vw] top-[4rem] inline-flex flex-col space-y-2 z-10">
-							<EditPostButton
-								postId={router.query.id as string}
-								userId={data?.userId as string}
-							/>
-							<DeletePostButton
-								postId={router.query.id as string}
-								userId={data?.userId as string}
-							/>
-						</div>
-						<VotingButton
-							postId={router.query.id as string}
-							extraClassNames="fixed left-[1rem] xl:left-[2vw] top-[4rem] z-10"
-							votes={data?._count.Votes as number}
-						/>
+					<div className="grid place-items-center w-[96vw] xl:w-[76vw]">
 						<div className="flex flex-col items-end">
 							<h1 className="text-center text-4xl font-extrabold mb-1 font-serif underline underline-offset-4 decoration-2 decoration-fuchsia-500">
 								{data?.title}
@@ -60,22 +45,39 @@ const PostPage = () => {
 								{data?.userId === session?.user?.id && <>(You)</>}
 							</span>
 						</div>
+						<div className="inline-flex space-x-4 mt-2">
+							<EditPostButton
+								postId={router.query.id as string}
+								userId={data?.userId as string}
+							/>
+							<DeletePostButton
+								postId={router.query.id as string}
+								userId={data?.userId as string}
+							/>
+						</div>
 						<div
 							dangerouslySetInnerHTML={{ __html: data?.body as string }}
-							className="ProseMirror mt-8"
+							className="ProseMirror mt-4"
 						/>
 						<hr className="h-1 w-full border-dashed border-gray-500" />
-						<div className="flex flex-col sm:flex-row w-full">
+						<div className="flex flex-col sm:flex-row w-full relative">
+							<VotingButton
+								postId={router.query.id as string}
+								extraClassNames="absolute top-1"
+								votes={data?._count.Votes as number}
+							/>
 							<CommentForm postId={router.query.id as string} />
-							<div className="flex flex-col items-center mt-2 p-2 space-y-1 overflow-y-scroll max-h-[30rem] flex-1">
+							<div className="flex flex-col items-center mt-2 flex-1">
 								<strong className="mb-1">Comments</strong>
-								{isCommentsLoading ? (
-									<span className="animate-pulse">Loading Comments...</span>
-								) : (
-									comments?.map((comment) => (
-										<Comment key={comment.id} comment={comment} />
-									))
-								)}
+								<div className="overflow-y-scroll max-h-[30rem] space-y-1 w-full p-2">
+									{isCommentsLoading ? (
+										<span className="animate-pulse">Loading Comments...</span>
+									) : (
+										comments?.map((comment) => (
+											<Comment key={comment.id} comment={comment} />
+										))
+									)}
+								</div>
 							</div>
 						</div>
 					</div>

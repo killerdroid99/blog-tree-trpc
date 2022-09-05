@@ -36,14 +36,12 @@ const VotingButton = ({
 		return (
 			<button
 				onClick={() => handleVote()}
-				className={`${extraClassNames} inline-flex items-center bg-yellow-500 backdrop-blur-sm hover:bg-yellow-600 text-sm font-bold rounded-full transition-all ease-in`}
+				className={`${extraClassNames} inline-flex items-center bg-yellow-700/50 ring-[2px] ring-yellow-700/80 backdrop-blur-sm hover:bg-yellow-600 text-sm font-bold rounded-full transition-all ease-in`}
 			>
-				<div className="flex-1 text-base -translate-y-px text-center py-px px-3">
-					{votes}
-				</div>
-				<div className="w-[2px] h-8 bg-yellow-700/50" />
-				<span className="py-px px-3">
-					{isLoading ? "saving" : data?.msg !== "voted" ? "vote?" : "voted!"}
+				<div className="flex-1 text-base text-center px-3">{votes}</div>
+				<div className="w-[2px] h-8 bg-yellow-700/80" />
+				<span className="px-3">
+					{isLoading ? "saving" : data?.msg === "voted" ? "voted!" : "vote?"}
 				</span>
 			</button>
 		);

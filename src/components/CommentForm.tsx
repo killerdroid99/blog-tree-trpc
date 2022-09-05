@@ -33,7 +33,7 @@ const CommentForm = ({ postId }: CommentFormProps) => {
 	if (session) {
 		return (
 			<form
-				className="flex flex-col py-4 space-y-4 flex-1"
+				className="flex flex-col py-4 space-y-4 flex-1 mt-8"
 				onSubmit={(e) => handleSubmit(e)}
 			>
 				<div className="flex flex-col-reverse gap-2 font-bold relative">
