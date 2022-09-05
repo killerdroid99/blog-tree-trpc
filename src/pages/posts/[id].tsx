@@ -77,7 +77,11 @@ const PostPage = () => {
 										<span className="animate-pulse">Loading Comments...</span>
 									) : (
 										comments?.map((comment) => (
-											<Comment key={comment.id} comment={comment} />
+											<Comment
+												key={comment.id}
+												comment={comment}
+												postOwnerId={data?.userId as string}
+											/>
 										))
 									)}
 								</div>

@@ -14,9 +14,10 @@ interface CommentProps {
 			name: string | null;
 		};
 	};
+	postOwnerId: string;
 }
 
-const Comment = ({ comment }: CommentProps) => {
+const Comment = ({ comment, postOwnerId }: CommentProps) => {
 	const { data: session } = useSession();
 	const qc = useQueryClient();
 	const [edit, setEdit] = useState(false);
@@ -71,20 +72,22 @@ const Comment = ({ comment }: CommentProps) => {
 			key={comment.id}
 			className="py-4 px-2 w-full text-sm ring-[1px] ring-neutral-700 rounded pl-12 relative group"
 		>
-			{session?.user?.id === comment.userId && (
-				<div className="flex space-x-4 text-neutral-400 absolute top-3 right-4 opacity-0 group-hover:opacity-100">
+			<div className="flex space-x-4 text-neutral-400 absolute top-3 right-4 opacity-0 group-hover:opacity-100">
+				{session?.user?.id === postOwnerId && (
 					<FaRegTrashAlt
 						className="cursor-pointer hover:text-red-500"
 						title="Delete comment"
 						onClick={handleDelete}
 					/>
+				)}
+				{session?.user?.id === comment.userId && (
 					<FaPencilAlt
 						className="cursor-pointer hover:text-amber-500"
 						title="Edit comment"
 						onClick={() => setEdit(!edit)}
 					/>
-				</div>
-			)}
+				)}
+			</div>
 			<div className="absolute left-2 top-3">
 				<Image
 					src={comment.user.image as string}
@@ -112,7 +115,7 @@ const Comment = ({ comment }: CommentProps) => {
 						/>
 						<button className="inline-flex items-center bg-emerald-500 backdrop-blur-sm hover:bg-emerald-600 text-sm font-bold py-1 px-2 rounded w-fit transition-all ease-in">
 							{isEditLoading ? (
-								<span className="animate-pulse">Saving</span>
+								<span className="animate-pulse">Saving...</span>
 							) : (
 								<>Save</>
 							)}
