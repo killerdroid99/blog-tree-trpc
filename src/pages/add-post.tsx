@@ -2,6 +2,7 @@ import Tiptap from "$/components/RichText";
 import { trpc } from "$/utils/trpc";
 import { useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
+import Linker from "@tiptap/extension-link";
 import { useRouter } from "next/router";
 import { FormEvent, useEffect, useId, useState } from "react";
 import { useQueryClient } from "react-query";
@@ -19,7 +20,13 @@ const AddPost = () => {
 	const [bodyError, setBodyError] = useState("");
 
 	const Editor = useEditor({
-		extensions: [StarterKit, Image],
+		extensions: [
+			StarterKit,
+			Image,
+			Linker.configure({
+				openOnClick: true,
+			}),
+		],
 		onFocus: () => {
 			setBodyError("");
 		},

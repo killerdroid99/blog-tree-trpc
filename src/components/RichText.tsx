@@ -18,6 +18,27 @@ const Tiptap = ({ editor }: { editor: Editor | null }) => {
 		}
 	}, [editor]);
 
+	const setLink = useCallback(() => {
+		const previousUrl = editor?.getAttributes("link").href;
+		const url = window.prompt("URL", previousUrl);
+
+		if (url === null) {
+			return;
+		}
+
+		if (url === "") {
+			editor?.chain().focus().extendMarkRange("link").unsetLink().run();
+
+			return;
+		}
+		editor
+			?.chain()
+			.focus()
+			.extendMarkRange("link")
+			.setLink({ href: url })
+			.run();
+	}, [editor]);
+
 	if (!editor) {
 		return null;
 	}
@@ -115,13 +136,22 @@ const Tiptap = ({ editor }: { editor: Editor | null }) => {
 				</BubbleMenu>
 			)}
 			<EditorContent editor={editor} />
-			<button
-				type="button"
-				onClick={addImage}
-				className="absolute py-px px-2 rounded-full font-semibold bg-amber-500 hover:bg-amber-600 focus:ring-fuchsia-500 focus:ring-2 transition-all ease-in outline-none border-none top-2 left-2 text-amber-900 text-xs"
-			>
-				Set Image
-			</button>
+			<div className="space-x-2 absolute top-2 left-2">
+				<button
+					type="button"
+					onClick={addImage}
+					className=" py-px px-2 rounded-full font-semibold bg-amber-500 hover:bg-amber-600 focus:ring-fuchsia-500 focus:ring-2 transition-all ease-in outline-none border-none  text-amber-900 text-xs"
+				>
+					Set Image
+				</button>
+				<button
+					type="button"
+					onClick={setLink}
+					className="py-px px-2 rounded-full font-semibold bg-amber-500 hover:bg-amber-600 focus:ring-fuchsia-500 focus:ring-2 transition-all ease-in outline-none border-none text-amber-900 text-xs"
+				>
+					Set Link
+				</button>
+			</div>
 		</>
 	);
 };

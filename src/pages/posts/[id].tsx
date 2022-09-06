@@ -61,7 +61,7 @@ const PostPage = () => {
 					</div>
 					<div
 						dangerouslySetInnerHTML={{ __html: data?.body as string }}
-						className="ProseMirror mt-4"
+						className="ProseMirror mt-4 display"
 					/>
 					<hr className="h-1 w-full border-dashed border-gray-500" />
 					<div className="flex flex-col sm:flex-row w-full relative space-x-2">
