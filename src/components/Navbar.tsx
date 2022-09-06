@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 
 const Navbar = () => {
 	const { data: session, status } = useSession();
-	const { theme, setTheme } = useTheme();
+	const { resolvedTheme, setTheme } = useTheme();
 	const [mounted, setMounted] = useState(false);
 	useEffect(() => setMounted(true), []);
 
@@ -62,10 +62,15 @@ const Navbar = () => {
 					<button
 						className="text-inherit focus-visible:ring-fuchsia-500 focus-visible:text-fuchsia-500 hover:text-fuchsia-500 inline-grid place-items-center mx-2 rounded bg-neutral-300 dark:bg-neutral-700 p-2 text-lg hover:ring-2 ring-fuchsia-500 border-none outline-none focus-visible:ring-2"
 						onClick={() => {
-							theme === "light" ? setTheme("dark") : setTheme("light");
+							resolvedTheme === "light" ? setTheme("dark") : setTheme("light");
 						}}
+						onDoubleClick={() => setTheme("system")}
 					>
-						{theme === "light" ? <RiSunLine /> : <RiMoonClearLine />}
+						{resolvedTheme === "light" ? (
+							<RiSunLine title="light theme" />
+						) : (
+							<RiMoonClearLine title="dark theme" />
+						)}
 					</button>
 				)}
 			</nav>
