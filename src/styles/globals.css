@@ -29,7 +29,7 @@
 }
 
 .ProseMirror code {
-	@apply bg-neutral-900;
+	@apply bg-neutral-900/60 text-black dark:text-white
 }
 
 .ProseMirror ul {
