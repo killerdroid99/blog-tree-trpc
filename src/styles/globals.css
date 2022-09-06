@@ -20,8 +20,8 @@
 	@apply text-[1.5rem] font-extrabold;
 }
 
-.ProseMirror p {
-	@apply my-4;
+.ProseMirror blockquote {
+	@apply border-l-4 border-fuchsia-500 px-2 bg-fuchsia-500/20;
 }
 
 .ProseMirror img {
@@ -29,7 +29,7 @@
 }
 
 .ProseMirror code {
-	@apply bg-neutral-900/60 text-black dark:text-white
+	@apply bg-neutral-400/30 font-bold px-2 dark:text-white text-black;
 }
 
 .ProseMirror ul {
@@ -38,14 +38,6 @@
 
 .ProseMirror li {
 	@apply ml-4;
-}
-
-.ProseMirror pre {
-	@apply px-4;
-}
-
-.ProseMirror pre code {
-	@apply bg-inherit text-white;
 }
 
 .Prose {
@@ -78,12 +70,16 @@
 	@apply ml-4;
 }
 
-.Prose pre {
-	@apply px-4;
+.ProseMirror pre {
+	@apply px-1 bg-neutral-400/20 dark:text-white;
 }
 
-.Prose pre code {
-	@apply bg-inherit text-white;
+.ProseMirror pre code {
+	@apply bg-transparent;
+}
+
+.ProseMirror a {
+	@apply underline text-indigo-500 cursor-pointer;
 }
 
 #__next {
@@ -92,4 +88,8 @@
 
 button {
 	@apply text-neutral-50;
+}
+
+.display p {
+	@apply my-4;
 }

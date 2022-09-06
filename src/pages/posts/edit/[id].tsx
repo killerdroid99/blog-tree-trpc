@@ -3,6 +3,7 @@ import { trpc } from "$/utils/trpc";
 import { useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { useRouter } from "next/router";
+import Linker from "@tiptap/extension-link";
 import { FormEvent, useEffect, useId, useState } from "react";
 import { useQueryClient } from "react-query";
 import Image from "@tiptap/extension-image";
@@ -25,7 +26,13 @@ const UpdatePost = () => {
 	const [bodyError, setBodyError] = useState("");
 
 	const Editor = useEditor({
-		extensions: [StarterKit, Image],
+		extensions: [
+			StarterKit,
+			Image,
+			Linker.configure({
+				openOnClick: true,
+			}),
+		],
 		onFocus: () => {
 			setBodyError("");
 		},
