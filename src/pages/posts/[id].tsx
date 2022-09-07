@@ -8,7 +8,8 @@ import { trpc } from "$/utils/trpc";
 import { format } from "date-fns";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { LegacyRef, useEffect, useState } from "react";
+import { useAutoAnimate } from "@formkit/auto-animate/react";
 
 const PostPage = () => {
 	const router = useRouter();
@@ -22,6 +23,7 @@ const PostPage = () => {
 		{ postId: router.query.id as string },
 	]);
 
+	const [parent] = useAutoAnimate();
 	const [formattedCreatedAtDate, setFormattedCreatedAtDate] = useState("");
 
 	useEffect(() => {
@@ -77,7 +79,10 @@ const PostPage = () => {
 								{comments?.length}{" "}
 								{comments?.length === 1 ? "comment" : "comments"}
 							</strong>
-							<div className="overflow-y-scroll max-h-[30rem] space-y-1 w-full p-2">
+							<div
+								className="overflow-y-scroll max-h-[30rem] space-y-1 w-full p-2"
+								ref={parent as LegacyRef<HTMLDivElement>}
+							>
 								{isCommentsLoading ? (
 									<span className="animate-pulse">Loading Comments...</span>
 								) : (
