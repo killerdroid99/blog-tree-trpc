@@ -68,7 +68,10 @@ const CommentForm = ({ postId }: CommentFormProps) => {
 						<span className="text-fuchsia-500">{session?.user?.name}</span>
 					</label>
 				</div>
-				<button className="inline-flex items-center bg-emerald-500 backdrop-blur-sm hover:bg-emerald-600 text-sm font-bold p-2 rounded w-fit transition-all ease-in">
+				<button
+					className="inline-flex items-center bg-emerald-500 backdrop-blur-sm hover:bg-emerald-600 text-sm font-bold p-2 rounded w-fit transition-all ease-in disabled:grayscale"
+					disabled={isLoading}
+				>
 					{isLoading ? (
 						<span className="animate-pulse">Adding...</span>
 					) : (

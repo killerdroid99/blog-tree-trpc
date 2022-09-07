@@ -116,7 +116,10 @@ const AddPost = () => {
 							<Tiptap editor={Editor} />
 						</div>
 					</div>
-					<button className="p-1 rounded font-semibold bg-blue-500 hover:bg-blue-600 focus:ring-fuchsia-500 focus:ring-2 focus:ring-offset-2 transition-all ease-in outline-none border-none">
+					<button
+						className="p-1 rounded font-semibold bg-blue-500 hover:bg-blue-600 focus:ring-fuchsia-500 focus:ring-2 focus:ring-offset-2 transition-all ease-in outline-none border-none disabled:grayscale"
+						disabled={isLoading}
+					>
 						{isLoading ? (
 							<span className="animate-pulse">Publishing...</span>
 						) : (

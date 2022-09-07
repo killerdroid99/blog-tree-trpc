@@ -138,7 +138,10 @@ const UpdatePost = () => {
 							<Tiptap editor={Editor} />
 						</div>
 					</div>
-					<button className="p-1 rounded font-semibold bg-green-500 hover:bg-green-600 focus:ring-fuchsia-500 focus:ring-2 focus:ring-offset-2 transition-all ease-in outline-none border-none">
+					<button
+						className="p-1 rounded font-semibold bg-green-500 hover:bg-green-600 focus:ring-fuchsia-500 focus:ring-2 focus:ring-offset-2 transition-all ease-in outline-none border-none disabled:grayscale"
+						disabled={isLoading}
+					>
 						{isLoading ? (
 							<span className="animate-pulse">Saving...</span>
 						) : (

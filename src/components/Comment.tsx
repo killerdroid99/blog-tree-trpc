@@ -141,7 +141,10 @@ const Comment = ({ comment, postOwnerId }: CommentProps) => {
 							onFocus={() => setCommentError("")}
 						/>
 						<small className="text-red-500 block">{commentError}</small>
-						<button className="inline-flex items-center bg-emerald-500 backdrop-blur-sm hover:bg-emerald-600 text-sm font-bold py-1 px-2 rounded w-fit transition-all ease-in">
+						<button
+							className="inline-flex items-center bg-emerald-500 backdrop-blur-sm hover:bg-emerald-600 text-sm font-bold py-1 px-2 rounded w-fit transition-all ease-in disabled:grayscale"
+							disabled={isEditLoading}
+						>
 							{isEditLoading ? (
 								<span className="animate-pulse">Saving...</span>
 							) : (
