@@ -1,7 +1,8 @@
 import { trpc } from "$/utils/trpc";
 import { Comments } from "@prisma/client";
 import { formatDistanceToNow } from "date-fns";
-import Picker from "emoji-picker-react";
+import dynamic from "next/dynamic";
+const Picker = dynamic(() => import("emoji-picker-react"), { ssr: false });
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { FormEvent, useEffect, useState } from "react";
@@ -57,6 +58,10 @@ const Comment = ({ comment, postOwnerId }: CommentProps) => {
 			}
 		);
 	};
+
+	useEffect(() => {
+		setEmoji(false);
+	}, []);
 
 	const handleDelete = () => {
 		window.confirm("Are you sure you want to delete this comment") &&

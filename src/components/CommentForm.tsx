@@ -3,8 +3,8 @@ import { useSession } from "next-auth/react";
 import { FormEvent, useEffect, useId, useState } from "react";
 import { BsEmojiSmile } from "react-icons/bs";
 import { useQueryClient } from "react-query";
-import Picker from "emoji-picker-react";
-
+import dynamic from "next/dynamic";
+const Picker = dynamic(() => import("emoji-picker-react"), { ssr: false });
 interface CommentFormProps {
 	postId: string;
 }
