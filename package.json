@@ -22,6 +22,7 @@
     "@trpc/react": "^9.27.2",
     "@trpc/server": "^9.27.2",
     "date-fns": "^2.29.2",
+    "emoji-picker-react": "^3.6.2",
     "next": "12.2.5",
     "next-auth": "^4.10.3",
     "next-themes": "^0.2.0",

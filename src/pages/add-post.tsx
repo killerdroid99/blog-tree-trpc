@@ -83,6 +83,7 @@ const AddPost = () => {
 			<div className="grid place-items-center gap-6 w-[96vw] xl:w-[50vw] relative bg-neutral-500/30 rounded-md">
 				<form
 					className="flex flex-col px-6 py-4 space-y-4 w-full"
+					spellCheck="false"
 					onSubmit={(e) => handleSubmit(e)}
 				>
 					<div className="flex flex-col-reverse gap-2 font-bold">

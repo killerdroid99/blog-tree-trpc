@@ -1,9 +1,11 @@
 import { trpc } from "$/utils/trpc";
 import { Comments } from "@prisma/client";
 import { formatDistanceToNow } from "date-fns";
+import Picker from "emoji-picker-react";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { FormEvent, useEffect, useState } from "react";
+import { BsEmojiSmile } from "react-icons/bs";
 import { FaPencilAlt, FaRegTrashAlt } from "react-icons/fa";
 import { useQueryClient } from "react-query";
 
@@ -30,6 +32,11 @@ const Comment = ({ comment, postOwnerId }: CommentProps) => {
 	const { mutate: mutateDelete, isLoading: isDeleteLoading } = trpc.useMutation(
 		["posts.delete-comment"]
 	);
+	const [emoji, setEmoji] = useState(false);
+	const [cursorIndex, setCursorIndex] = useState({
+		start: 0,
+		end: 0,
+	});
 
 	const handleEdit = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
@@ -40,6 +47,7 @@ const Comment = ({ comment, postOwnerId }: CommentProps) => {
 			},
 			{
 				onSuccess() {
+					setEmoji(false);
 					qc.invalidateQueries([
 						"posts.getCommentsForPost",
 						{ postId: comment.postId as string },
@@ -129,7 +137,42 @@ const Comment = ({ comment, postOwnerId }: CommentProps) => {
 			</h4>
 			<div className="mt-2">
 				{edit ? (
-					<form className="space-y-2" onSubmit={(e) => handleEdit(e)}>
+					<form className="space-y-2 relative" onSubmit={(e) => handleEdit(e)}>
+						{emoji && (
+							<div className="absolute -bottom-[18rem] right-0 z-10">
+								<Picker
+									disableSkinTonePicker={true}
+									// disableSearchBar={true}
+									pickerStyle={{
+										backgroundColor: "#ddd",
+										boxShadow: "none",
+										border: "none",
+										color: "white",
+									}}
+									onEmojiClick={(_e, em) => {
+										if (cursorIndex.start === cursorIndex.end) {
+											setNewBody((prev) =>
+												[
+													prev.slice(0, cursorIndex.start),
+													em.emoji,
+													prev.slice(cursorIndex.start),
+												].join("")
+											);
+										} else {
+											setNewBody((prev) =>
+												[
+													prev.slice(0, cursorIndex.start),
+													em.emoji,
+													prev.slice(cursorIndex.end),
+												].join("")
+											);
+										}
+									}}
+									disableAutoFocus={true}
+									native
+								/>
+							</div>
+						)}
 						<textarea
 							value={newBody}
 							maxLength={500}
@@ -139,6 +182,13 @@ const Comment = ({ comment, postOwnerId }: CommentProps) => {
 								commentError !== "" && "ring-2 ring-red-500"
 							}`}
 							onFocus={() => setCommentError("")}
+							onSelect={(e) => {
+								const target = e.target as HTMLTextAreaElement;
+								setCursorIndex({
+									start: target.selectionStart,
+									end: target.selectionEnd,
+								});
+							}}
 						/>
 						<small className="text-red-500 block">{commentError}</small>
 						<button
@@ -153,10 +203,20 @@ const Comment = ({ comment, postOwnerId }: CommentProps) => {
 						</button>
 						<button
 							type="button"
-							className="inline-flex items-center bg-rose-500 backdrop-blur-sm ml-2 hover:bg-rose-600 text-sm font-bold py-1 px-2 rounded w-fit transition-all ease-in"
-							onClick={() => setEdit(false)}
+							className="inline-flex items-center bg-rose-500 backdrop-blur-sm mx-2 hover:bg-rose-600 text-sm font-bold py-1 px-2 rounded w-fit transition-all ease-in"
+							onClick={() => {
+								setEdit(false);
+								setEmoji(false);
+							}}
 						>
 							Cancel
+						</button>
+						<button
+							type="button"
+							onClick={() => setEmoji(!emoji)}
+							className="inline-grid place-items-center rounded aspect-square h-full min-w-[2rem] bg-neutral-600/40 ring-fuchsia-500 focus-visible:ring-2 hover:bg-neutral-900 hover:text-fuchsia-500 hover:ring-fuchsia-500 hover:ring-2 transition-colors ease-in-out"
+						>
+							<BsEmojiSmile />
 						</button>
 					</form>
 				) : (
