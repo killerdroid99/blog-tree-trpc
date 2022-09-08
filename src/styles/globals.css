@@ -93,3 +93,7 @@ button {
 .display p {
 	@apply my-4;
 }
+
+.emoji-picker-react input {
+	@apply bg-gray-400 text-sm font-thin;
+}

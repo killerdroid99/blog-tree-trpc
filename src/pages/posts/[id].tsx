@@ -66,7 +66,7 @@ const PostPage = () => {
 						className="ProseMirror mt-4 display"
 					/>
 					<hr className="h-1 w-full border-dashed border-gray-500" />
-					<div className="flex flex-col sm:flex-row w-full relative space-x-2">
+					<div className="flex flex-col sm:flex-row w-full relative space-x-2 mb-20">
 						<VotingButton
 							postId={router.query.id as string}
 							extraClassNames="absolute top-2"
@@ -80,7 +80,7 @@ const PostPage = () => {
 								{comments?.length === 1 ? "comment" : "comments"}
 							</strong>
 							<div
-								className="overflow-y-scroll max-h-[30rem] space-y-1 w-full p-2"
+								className="space-y-1 w-full p-2"
 								ref={parent as LegacyRef<HTMLDivElement>}
 							>
 								{isCommentsLoading ? (
