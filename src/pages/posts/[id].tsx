@@ -10,6 +10,7 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { LegacyRef, useEffect, useState } from "react";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
+import Link from "next/link";
 
 const PostPage = () => {
 	const router = useRouter();
@@ -46,7 +47,14 @@ const PostPage = () => {
 						</h1>
 						<span className="text-sm text-neutral-600 dark:text-neutral-300 font-sans font-semibold w-fit mb-2 mt-1 tracking-wide">
 							~ Published by{" "}
-							<span className="text-fuchsia-500">{data?.user?.name} </span>
+							<Link href={"/profile/" + data?.user?.id}>
+								<span
+									className="text-fuchsia-500 cursor-pointer"
+									title="view profile"
+								>
+									{data?.user?.name}{" "}
+								</span>
+							</Link>
 							{data?.userId === session?.user?.id && <>(You)</>} on{" "}
 							<span className="text-fuchsia-500">{formattedCreatedAtDate}</span>
 						</span>

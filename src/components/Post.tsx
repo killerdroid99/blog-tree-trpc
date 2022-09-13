@@ -38,13 +38,18 @@ const Post = ({ post }: PostProps) => {
 				<div className="flex flex-col text-right">
 					<p className="text-neutral-700 dark:text-neutral-400 text-xs tracking-wide">
 						created by{" "}
-						<strong className="text-fuchsia-500">
-							{session?.user?.id === post.user.id ? (
-								<>You</>
-							) : (
-								<>{post.user.name}</>
-							)}
-						</strong>
+						<Link href={"/profile/" + post.user.id}>
+							<strong
+								className="text-fuchsia-500 cursor-pointer"
+								title="view profile"
+							>
+								{session?.user?.id === post.user.id ? (
+									<>You</>
+								) : (
+									<>{post.user.name}</>
+								)}
+							</strong>
+						</Link>
 					</p>
 					<p className="text-neutral-600 dark:text-neutral-300 text-xs tracking-wide">
 						{formattedCreatedAt}

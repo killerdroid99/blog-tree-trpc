@@ -9,6 +9,7 @@ import { FormEvent, useEffect, useState } from "react";
 import { BsEmojiSmile } from "react-icons/bs";
 import { FaPencilAlt, FaRegTrashAlt } from "react-icons/fa";
 import { useQueryClient } from "react-query";
+import Link from "next/link";
 
 interface CommentProps {
 	comment: Comments & {
@@ -134,8 +135,13 @@ const Comment = ({ comment, postOwnerId }: CommentProps) => {
 					className="rounded-full"
 				/>
 			</div>
-			<h4 className="text-fuchsia-500 font-bold flex items-center">
-				{session?.user?.id === comment.userId ? "You" : comment.user.name}{" "}
+			<h4
+				className="text-fuchsia-500 font-bold flex items-center"
+				title="view profile"
+			>
+				<Link href={"/profile/" + comment.userId} className="cursor-pointer">
+					{session?.user?.id === comment.userId ? "You" : comment.user.name}
+				</Link>{" "}
 				<span className="text-xs text-neutral-500 inline ml-2">
 					{formattedCreatedAt}
 				</span>{" "}

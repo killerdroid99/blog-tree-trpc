@@ -43,6 +43,7 @@ export const postsRouter = createRouter()
 				include: {
 					user: {
 						select: {
+							id: true,
 							name: true,
 						},
 					},
