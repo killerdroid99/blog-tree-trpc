@@ -33,16 +33,21 @@ const Navbar = () => {
 				)}
 				{status === "authenticated" && (
 					<div className="space-x-2 sm:space-x-6 flex items-center">
-						<span className="font-bold text-xs sm:text-sm flex items-center gap-2">
-							<Image
-								src={session.user?.image as string}
-								alt={session.user?.name as string}
-								width={25}
-								height={25}
-								className="rounded-full"
-							/>
-							{session.user?.name}
-						</span>
+						<Link href={"/profile/" + session.user?.id}>
+							<div
+								className="font-bold text-xs sm:text-sm flex items-center gap-2 cursor-pointer"
+								title="Profile"
+							>
+								<Image
+									src={session.user?.image as string}
+									alt={session.user?.name as string}
+									width={25}
+									height={25}
+									className="rounded-full"
+								/>
+								{session.user?.name}
+							</div>
+						</Link>
 						<button
 							onClick={() => signOut()}
 							className="inline-flex py-1 px-3 rounded text-sm bg-red-600 hover:bg-red-700 focus:ring-2 focus:ring-indigo-600 focus:ring-offset-1 tracking-wider focus:outline-none font-bold transition-colors ease-out"
