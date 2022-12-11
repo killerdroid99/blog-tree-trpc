@@ -72,7 +72,7 @@ const Profile: NextPage = () => {
 
 	return (
 		<Layout title="Profile">
-			<div className="flex flex-col w-[98%] lg:w-[84rem] bg-neutral-200 dark:bg-neutral-700 rounded items-center">
+			<div className="flex flex-col w-[98%] lg:w-[84rem] rounded items-center">
 				<div className="mt-4">
 					<Image
 						src={user?.image as string}
@@ -136,7 +136,7 @@ const Profile: NextPage = () => {
 						<h3 className="text-xl lg:text-center font-extrabold underline decoration-2 decoration-fuchsia-500 underline-offset-4 mb-5">
 							{session?.user?.id === user?.id ? "Your Posts" : "Posts"}
 						</h3>
-						<div className="flex flex-col space-y-3 max-w-xl mx-auto">
+						<div className="flex flex-col space-y-3 mx-auto">
 							{userPosts &&
 								userPosts.map((p) => (
 									<Link href={`/posts/${p.id}`} key={p.id}>
